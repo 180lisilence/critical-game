@@ -1,0 +1,326 @@
+[
+ {
+  "file": "btn_primary.png",
+  "group": "基础组件",
+  "label": "主按钮",
+  "url": "https://aka.doubaocdn.com/s/MhD23t2nWu",
+  "bytes": 222116,
+  "ok": true,
+  "err": ""
+ },
+ {
+  "file": "btn_secondary.png",
+  "group": "基础组件",
+  "label": "次按钮",
+  "url": "https://aka.doubaocdn.com/s/0XDbbP7CV0",
+  "bytes": 138650,
+  "ok": true,
+  "err": ""
+ },
+ {
+  "file": "btn_close.png",
+  "group": "基础组件",
+  "label": "关闭按钮",
+  "url": "https://aka.doubaocdn.com/s/t0Y5p5EAfh",
+  "bytes": 724655,
+  "ok": true,
+  "err": ""
+ },
+ {
+  "file": "panel_dialog.png",
+  "group": "基础组件",
+  "label": "弹窗面板",
+  "url": "https://aka.doubaocdn.com/s/75gNNWOjIX",
+  "bytes": 945524,
+  "ok": true,
+  "err": ""
+ },
+ {
+  "file": "card_item.png",
+  "group": "基础组件",
+  "label": "物品卡片",
+  "url": "https://aka.doubaocdn.com/s/YT4Uj0t4Mv",
+  "bytes": 160824,
+  "ok": true,
+  "err": ""
+ },
+ {
+  "file": "bar_hp.png",
+  "group": "基础组件",
+  "label": "血条",
+  "url": "https://aka.doubaocdn.com/s/UJVFmAu4Hi",
+  "bytes": 623029,
+  "ok": true,
+  "err": ""
+ },
+ {
+  "file": "bar_energy.png",
+  "group": "基础组件",
+  "label": "能量条",
+  "url": "https://aka.doubaocdn.com/s/Uy87KaCibB",
+  "bytes": 952199,
+  "ok": true,
+  "err": ""
+ },
+ {
+  "file": "slider_volume.png",
+  "group": "基础组件",
+  "label": "音量滑块",
+  "url": "https://aka.doubaocdn.com/s/FCH3QrTjmt",
+  "bytes": 449928,
+  "ok": true,
+  "err": ""
+ },
+ {
+  "file": "icon_starcrystal.png",
+  "group": "功能图标",
+  "label": "星晶货币",
+  "url": "https://aka.doubaocdn.com/s/o1E8GVn1hU",
+  "bytes": 785986,
+  "ok": true,
+  "err": ""
+ },
+ {
+  "file": "icon_gold.png",
+  "group": "功能图标",
+  "label": "金币",
+  "url": "https://aka.doubaocdn.com/s/C2CdfGLKYV",
+  "bytes": 1105000,
+  "ok": true,
+  "err": ""
+ },
+ {
+  "file": "icon_hp.png",
+  "group": "功能图标",
+  "label": "生命值",
+  "url": "https://aka.doubaocdn.com/s/K1yBnOwmYC",
+  "bytes": 950668,
+  "ok": true,
+  "err": ""
+ },
+ {
+  "file": "icon_shield.png",
+  "group": "功能图标",
+  "label": "护盾",
+  "url": "https://aka.doubaocdn.com/s/CZ7gRLULJ0",
+  "bytes": 908020,
+  "ok": true,
+  "err": ""
+ },
+ {
+  "file": "icon_crit.png",
+  "group": "功能图标",
+  "label": "暴击",
+  "url": "https://aka.doubaocdn.com/s/l8k5xAyL0S",
+  "bytes": 1038212,
+  "ok": true,
+  "err": ""
+ },
+ {
+  "file": "icon_chest.png",
+  "group": "功能图标",
+  "label": "宝箱",
+  "url": "https://aka.doubaocdn.com/s/mUZ9dys7mX",
+  "bytes": 748646,
+  "ok": true,
+  "err": ""
+ },
+ {
+  "file": "icon_key.png",
+  "group": "功能图标",
+  "label": "钥匙",
+  "url": "https://aka.doubaocdn.com/s/pKxiV4CTRK",
+  "bytes": 846756,
+  "ok": true,
+  "err": ""
+ },
+ {
+  "file": "icon_settings.png",
+  "group": "功能图标",
+  "label": "设置",
+  "url": "https://aka.doubaocdn.com/s/jqqxiRca0V",
+  "bytes": 989154,
+  "ok": true,
+  "err": ""
+ },
+ {
+  "file": "icon_achievement.png",
+  "group": "系统图标",
+  "label": "成就",
+  "url": "https://aka.doubaocdn.com/s/FNtJfUj9QU",
+  "bytes": 743779,
+  "ok": true,
+  "err": ""
+ },
+ {
+  "file": "icon_rank.png",
+  "group": "系统图标",
+  "label": "排行榜",
+  "url": "https://aka.doubaocdn.com/s/TNmhXqcpni",
+  "bytes": 677856,
+  "ok": true,
+  "err": ""
+ },
+ {
+  "file": "icon_pause.png",
+  "group": "系统图标",
+  "label": "暂停",
+  "url": "https://aka.doubaocdn.com/s/FUm59iLOkX",
+  "bytes": 860098,
+  "ok": true,
+  "err": ""
+ },
+ {
+  "file": "icon_back.png",
+  "group": "系统图标",
+  "label": "返回",
+  "url": "https://aka.doubaocdn.com/s/LBIA3BZgBm",
+  "bytes": 814670,
+  "ok": true,
+  "err": ""
+ },
+ {
+  "file": "icon_volume.png",
+  "group": "系统图标",
+  "label": "音量",
+  "url": "https://aka.doubaocdn.com/s/HphirEmTCq",
+  "bytes": 711813,
+  "ok": true,
+  "err": ""
+ },
+ {
+  "file": "icon_quality.png",
+  "group": "系统图标",
+  "label": "画质",
+  "url": "https://aka.doubaocdn.com/s/XfIvclUcN7",
+  "bytes": 804814,
+  "ok": true,
+  "err": ""
+ },
+ {
+  "file": "icon_save.png",
+  "group": "系统图标",
+  "label": "存档",
+  "url": "https://aka.doubaocdn.com/s/TFt3HCB8YU",
+  "bytes": 1094696,
+  "ok": true,
+  "err": ""
+ },
+ {
+  "file": "icon_help.png",
+  "group": "系统图标",
+  "label": "帮助",
+  "url": "https://aka.doubaocdn.com/s/UBv1SKxGb2",
+  "bytes": 889991,
+  "ok": true,
+  "err": ""
+ },
+ {
+  "file": "buff_invincible.png",
+  "group": "状态图标",
+  "label": "无敌",
+  "url": "https://aka.doubaocdn.com/s/jeFR2KOb3Q",
+  "bytes": 1117948,
+  "ok": true,
+  "err": ""
+ },
+ {
+  "file": "buff_rage.png",
+  "group": "状态图标",
+  "label": "狂暴",
+  "url": "https://aka.doubaocdn.com/s/2Xm23AQ7ma",
+  "bytes": 951883,
+  "ok": true,
+  "err": ""
+ },
+ {
+  "file": "debuff_slow.png",
+  "group": "状态图标",
+  "label": "减速",
+  "url": "https://aka.doubaocdn.com/s/DQOUbpK3Un",
+  "bytes": 1241263,
+  "ok": true,
+  "err": ""
+ },
+ {
+  "file": "debuff_poison.png",
+  "group": "状态图标",
+  "label": "中毒",
+  "url": "https://aka.doubaocdn.com/s/guGr2nluIV",
+  "bytes": 940859,
+  "ok": true,
+  "err": ""
+ },
+ {
+  "file": "buff_heal.png",
+  "group": "状态图标",
+  "label": "回血",
+  "url": "https://aka.doubaocdn.com/s/hAT22H6KRI",
+  "bytes": 944685,
+  "ok": true,
+  "err": ""
+ },
+ {
+  "file": "buff_speed.png",
+  "group": "状态图标",
+  "label": "加速",
+  "url": "https://aka.doubaocdn.com/s/rU5Cm8kcCe",
+  "bytes": 860463,
+  "ok": true,
+  "err": ""
+ },
+ {
+  "file": "skill_meteor.png",
+  "group": "技能图标",
+  "label": "星陨爆破",
+  "url": "https://aka.doubaocdn.com/s/nYK6T4jXCF",
+  "bytes": 967608,
+  "ok": true,
+  "err": ""
+ },
+ {
+  "file": "skill_dash.png",
+  "group": "技能图标",
+  "label": "暴击突袭",
+  "url": "https://aka.doubaocdn.com/s/yOYsPT9Vz5",
+  "bytes": 938785,
+  "ok": true,
+  "err": ""
+ },
+ {
+  "file": "skill_rift.png",
+  "group": "技能图标",
+  "label": "虚空裂隙",
+  "url": "https://aka.doubaocdn.com/s/VnRDE4SwL2",
+  "bytes": 1008898,
+  "ok": true,
+  "err": ""
+ },
+ {
+  "file": "skill_barrier.png",
+  "group": "技能图标",
+  "label": "星晶屏障",
+  "url": "https://aka.doubaocdn.com/s/dwLN23rBp4",
+  "bytes": 1022439,
+  "ok": true,
+  "err": ""
+ },
+ {
+  "file": "skill_rebirth.png",
+  "group": "技能图标",
+  "label": "满级重生",
+  "url": "https://aka.doubaocdn.com/s/DyiNjmAwAC",
+  "bytes": 1257141,
+  "ok": true,
+  "err": ""
+ },
+ {
+  "file": "skill_chain.png",
+  "group": "技能图标",
+  "label": "连锁闪电",
+  "url": "https://aka.doubaocdn.com/s/S9VOGa6VeH",
+  "bytes": 1050951,
+  "ok": true,
+  "err": ""
+ }
+]

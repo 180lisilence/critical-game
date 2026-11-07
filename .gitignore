@@ -1,0 +1,17 @@
+# Gradle / 构建中间产物（可由 gradle 重新生成）
+.gradle/
+**/build/intermediates/
+**/build/tmp/
+**/build/generated/
+**/build/.transforms/
+**/build/kotlin/
+**/build/outputs/logs/
+*.lock
+
+# 工具私有数据（非项目内容）
+.workbuddy/
+
+# 资源管线临时输入（tools/install_*.py 的原始包，交接文档标注可清理）
+tools/tmp/
+
+# 注意：android/build/outputs/apk/debug/*.apk 为交付成品，务必保留入库

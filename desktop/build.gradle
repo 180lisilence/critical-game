@@ -1,0 +1,32 @@
+plugins {
+    id 'application'
+}
+
+application {
+    mainClass = 'com.yunluhezi.maxcrit.desktop.DesktopLauncher'
+}
+
+sourceSets {
+    main {
+        java.srcDirs = ['src/main/java']
+        resources.srcDirs = ['../assets']
+    }
+}
+
+dependencies {
+    implementation project(':core')
+    implementation files('../libs/gdx-backend-lwjgl3-1.12.1.jar')
+    implementation files('../libs/gdx-platform-1.12.1-natives-desktop.jar')
+    implementation files('../libs/gdx-freetype-1.12.1.jar')
+    implementation files('../libs/gdx-freetype-platform-1.12.1-natives-desktop.jar')
+}
+
+run {
+    workingDir = file('..')
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.yunluhezi.maxcrit.desktop.DesktopLauncher'
+    }
+}

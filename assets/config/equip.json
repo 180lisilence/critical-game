@@ -1,0 +1,102 @@
+{
+ "equips": [
+  {
+   "id": "eq_wpn_01",
+   "name": "裂隙之刃",
+   "slot": "weapon",
+   "quality": 2,
+   "icon": "equip_weapon",
+   "setId": "set_crack",
+   "critRate": 12,
+   "critDamage": 40,
+   "attack": 8,
+   "hp": 0,
+   "moveSpeed": 0,
+   "desc": "暴击率+12% 爆伤+40%"
+  },
+  {
+   "id": "eq_wpn_02",
+   "name": "星陨之枪",
+   "slot": "weapon",
+   "quality": 3,
+   "icon": "equip_weapon",
+   "setId": "set_crack",
+   "critRate": 18,
+   "critDamage": 65,
+   "attack": 12,
+   "hp": 0,
+   "moveSpeed": 0,
+   "desc": "暴击率+18% 爆伤+65%"
+  },
+  {
+   "id": "eq_hlm_01",
+   "name": "虚空头冠",
+   "slot": "helmet",
+   "quality": 2,
+   "icon": "equip_helmet",
+   "setId": "set_void",
+   "critRate": 8,
+   "critDamage": 25,
+   "attack": 0,
+   "hp": 20,
+   "moveSpeed": 0,
+   "desc": "暴击率+8% 爆伤+25%"
+  },
+  {
+   "id": "eq_cape_01",
+   "name": "暗夜披风",
+   "slot": "cape",
+   "quality": 3,
+   "icon": "equip_cape",
+   "setId": "set_void",
+   "critRate": 10,
+   "critDamage": 30,
+   "attack": 0,
+   "hp": 30,
+   "moveSpeed": 10,
+   "desc": "暴击率+10% 爆伤+30%"
+  },
+  {
+   "id": "eq_amn_01",
+   "name": "破晓护符",
+   "slot": "amulet",
+   "quality": 4,
+   "icon": "equip_amulet",
+   "setId": "set_dawn",
+   "critRate": 25,
+   "critDamage": 80,
+   "attack": 0,
+   "hp": 50,
+   "moveSpeed": 0,
+   "desc": "暴击率+25% 爆伤+80%"
+  },
+  {
+   "id": "eq_bts_01",
+   "name": "疾行战靴",
+   "slot": "boots",
+   "quality": 2,
+   "icon": "equip_boots",
+   "setId": "set_dawn",
+   "critRate": 6,
+   "critDamage": 15,
+   "attack": 0,
+   "hp": 0,
+   "moveSpeed": 25,
+   "desc": "暴击率+6% 爆伤+15%"
+  },
+  {
+   "id": "eq_rng_01",
+   "name": "暴击戒印",
+   "slot": "ring",
+   "quality": 5,
+   "icon": "equip_ring",
+   "setId": "set_crack",
+   "critRate": 35,
+   "critDamage": 120,
+   "attack": 0,
+   "hp": 0,
+   "moveSpeed": 0,
+   "desc": "暴击率+35% 爆伤+120%"
+  }
+ ]
+}

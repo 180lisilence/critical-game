@@ -1,0 +1,94 @@
+{
+ "talents": [
+  {
+   "id": "tl_k1",
+   "name": "锋锐",
+   "branch": "kill",
+   "desc": "暴击率 +5%",
+   "tier": 1,
+   "cost": 1,
+   "parent": null,
+   "value": 5
+  },
+  {
+   "id": "tl_k2",
+   "name": "碎星",
+   "branch": "kill",
+   "desc": "爆伤 +20%",
+   "tier": 2,
+   "cost": 1,
+   "parent": "tl_k1",
+   "value": 20
+  },
+  {
+   "id": "tl_k3",
+   "name": "瞬杀",
+   "branch": "kill",
+   "desc": "对残血目标额外 +25% 伤害",
+   "tier": 3,
+   "cost": 2,
+   "parent": "tl_k2",
+   "value": 25
+  },
+  {
+   "id": "tl_e1",
+   "name": "迅捷",
+   "branch": "endless",
+   "desc": "移速 +8%",
+   "tier": 1,
+   "cost": 1,
+   "parent": null,
+   "value": 8
+  },
+  {
+   "id": "tl_e2",
+   "name": "永续",
+   "branch": "endless",
+   "desc": "最大生命 +15%",
+   "tier": 2,
+   "cost": 1,
+   "parent": "tl_e1",
+   "value": 15
+  },
+  {
+   "id": "tl_e3",
+   "name": "不息",
+   "branch": "endless",
+   "desc": "攻速 +10%",
+   "tier": 3,
+   "cost": 2,
+   "parent": "tl_e2",
+   "value": 10
+  },
+  {
+   "id": "tl_b1",
+   "name": "护盾",
+   "branch": "bless",
+   "desc": "开局获得 1 次护盾",
+   "tier": 1,
+   "cost": 1,
+   "parent": null,
+   "value": 1
+  },
+  {
+   "id": "tl_b2",
+   "name": "神佑",
+   "branch": "bless",
+   "desc": "受到的伤害 -12%",
+   "tier": 2,
+   "cost": 1,
+   "parent": "tl_b1",
+   "value": 12
+  },
+  {
+   "id": "tl_b3",
+   "name": "回溯",
+   "branch": "bless",
+   "desc": "开局回复 30% 生命",
+   "tier": 3,
+   "cost": 2,
+   "parent": "tl_b2",
+   "value": 30
+  }
+ ]
+}

@@ -1,0 +1,56 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.yunluhezi.maxcrit'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.yunluhezi.maxcrit"
+        minSdk 24
+        targetSdk 34
+        versionCode 1
+        versionName "0.1.0"
+
+        // 关键：LibGDX 从 assets 读取纹理/音频时需要文件未被 aapt 压缩，
+        // 否则 Texture 解码失败直接崩溃。
+        aaptOptions {
+            noCompress 'jpg', 'jpeg', 'png', 'wav', 'ogg', 'mp3', 'ttf', 'fnt'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    packagingOptions {
+        // natives 是纯本地 jar，不需要剔除
+        exclude 'META-INF/robovm/**'
+        exclude 'META-INF/proguard/**'
+        jniLibs {
+            useLegacyPackaging false
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.debug
+        }
+    }
+
+    sourceSets {
+        main {
+            assets.srcDirs = ['../assets']
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+}
+
+dependencies {
+    implementation project(':core')
+
+    implementation files('../libs/gdx-backend-android-1.12.1.aar')
+}

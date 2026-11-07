@@ -1,0 +1,76 @@
+《重生之满级暴击》音效清单（CC0 可商用，直接给LibGDX原型用，深空紫黑金科幻暗黑风格）
+ 
+全部wav格式，LibGDX  AudioDevice / Sound / Music  原生支持，无需版权、不用署名，分【战斗、UI、BGM循环、拾取成长、BOSS专属】5大类，附带下载源、命名规范（和你项目素材命名对齐，避免冲突）
+ 
+基础资源大包（优先下这两个，覆盖80%需求）
+ 
+1. Kenney Sci-Fi Sounds（70个科幻音效，CC0）
+链接：https://kenney.nl/assets/sci-fi-sounds 
+
+2. Kenney RPG Audio（50个打击、受伤、魔法音效，CC0）
+链接：https://kenney.nl/assets/rpg-audio 
+ 
+一、战斗音效（核心，匹配程序化战斗）
+ 
+表格
+   
+内部文件名 用途 说明 来源 
+ sfx_hit_normal.wav  普通击中 清脆裂隙撞击声，小怪受击 Kenney RPG Audio 
+ sfx_critical_hit.wav  暴击！【重点】 高频共振+低音轰鸣，对应暴击突破，和方案里“暴击突破晶”命名统一 Kenney Sci-Fi 
+ sfx_player_hurt.wav  玩家受伤 低沉嗡鸣、短暂失真 Kenney Sci-Fi 
+ sfx_enemy_death.wav  小怪死亡消散 晶体碎裂、雾化消散声 Kenney RPG Audio 
+ sfx_boss_hurt.wav  BOSS受击 厚重低频回响 OpenGameArt qubodup 
+ sfx_boss_death.wav  BOSS击杀 大范围空间崩塌音效 OpenGameArt 
+ sfx_skill_cast.wav  技能释放 能量充能咻声 Kenney Sci-Fi 
+ sfx_projectile.wav  子弹飞行 微弱高频掠过声（程序化子弹配套） Kenney Sci-Fi 
+ 
+二、拾取&成长音效（对应经验球、暴击突破晶、升级、遗物）
+ 
+表格
+   
+内部文件名 用途 说明 
+ sfx_pickup_exp.wav  拾取经验球 柔和向上的流光叮咚 
+ sfx_pickup_crystal.wav  拾取暴击突破晶 亮、带有金属共振，单独区分经验球 
+ sfx_levelup.wav  升级 升调长音，力量充盈感 
+ sfx_relic_get.wav  获取遗物 空灵回响 
+ sfx_shop_buy.wav  商店购买 稳定清脆确认音 
+ 
+三、UI界面音效（所有面板、弹窗、按钮，适配底板+动态UI方案）
+ 
+表格
+   
+内部文件名 用途 
+ sfx_ui_click.wav  按钮点击 
+ sfx_ui_hover.wav  鼠标悬停 
+ sfx_ui_confirm.wav  确认弹窗、进入秘境 
+ sfx_ui_cancel.wav  返回、关闭弹窗 
+ sfx_ui_error.wav  操作失败（存档读取异常） 
+ sfx_ui_unlock.wav  解锁关卡/难度 
+ 
+四、BGM循环音乐（无缝Loop，适配4个秘境，单人为主、联机复用）
+ 
+全部长循环，OGG/WAV，LibGDX Music类播放，音量低于音效
+ 
+1.  bgm_void_gap.ogg  虚空初隙：低沉、空旷、持续低频氛围音，慢节奏
+
+2.  bgm_star_abyss.ogg  星陨深渊：带微弱鼓点，紧张感提升
+
+3.  bgm_chaos_boundary.ogg  混沌边界：节奏更快，暗流压迫感
+
+4.  bgm_boss_theme.ogg  BOSS战BGM：重低音+脉冲，BOSS出场自动切换
+
+5.  bgm_menu.ogg  主菜单BGM：空灵深空氛围，低音量
+ 
+推荐BGM来源：OpenGameArt 氛围科幻dark ambient、Freesound搜索  dark sci-fi loop CC0  
+ 
+五、特殊状态音效（Buff/Debuff、无敌、传送、重生）
+ 
+-  sfx_buff_invincible.wav ：无敌帧激活
+
+-  sfx_buff_heal.wav ：回血
+
+-  sfx_debuff_slow.wav ：减速附着嗡鸣
+
+-  sfx_respawn.wav ：重生触发（对应游戏核心【满级重生】）
+
+-  sfx_teleport.wav ：传送门进出音效

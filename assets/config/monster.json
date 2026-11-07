@@ -1,0 +1,74 @@
+{
+ "monsters": [
+  {
+   "id": "mon_stone",
+   "name": "石魔",
+   "hp": 30,
+   "speed": 55,
+   "damage": 8,
+   "critResist": 0,
+   "exp": 3,
+   "radius": 22,
+   "elite": false,
+   "boss": false,
+   "texture": "enemy_stone",
+   "ai": "chase"
+  },
+  {
+   "id": "mon_demon",
+   "name": "暗影恶魔",
+   "hp": 45,
+   "speed": 80,
+   "damage": 11,
+   "critResist": 5,
+   "exp": 4,
+   "radius": 24,
+   "elite": false,
+   "boss": false,
+   "texture": "enemy_demon",
+   "ai": "chase"
+  },
+  {
+   "id": "mon_golem",
+   "name": "熔核巨像",
+   "hp": 120,
+   "speed": 40,
+   "damage": 16,
+   "critResist": 10,
+   "exp": 8,
+   "radius": 32,
+   "elite": false,
+   "boss": false,
+   "texture": "enemy_golem",
+   "ai": "chase"
+  },
+  {
+   "id": "mon_elite",
+   "name": "深渊精英",
+   "hp": 260,
+   "speed": 60,
+   "damage": 22,
+   "critResist": 15,
+   "exp": 15,
+   "radius": 38,
+   "elite": true,
+   "boss": false,
+   "texture": "enemy_demon",
+   "ai": "chase"
+  },
+  {
+   "id": "mon_boss",
+   "name": "裂隙主宰",
+   "hp": 1200,
+   "speed": 45,
+   "damage": 30,
+   "critResist": 25,
+   "exp": 60,
+   "radius": 60,
+   "elite": true,
+   "boss": true,
+   "texture": "enemy_golem",
+   "ai": "chase"
+  }
+ ]
+}

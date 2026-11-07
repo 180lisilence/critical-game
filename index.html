@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>重生之满级暴击 · Max Crit Reborn</title>
+<meta name="description" content="重生之满级暴击 —— 基于 LibGDX 1.12.1 的原创 2D 肉鸽割草游戏。满级暴击乘区、回溯印记重生、神装符文与天赋树养成。含 Android APK 下载与完整原理说明。">
+<style>
+  :root{
+    --bg:#070912; --bg2:#0d1020; --panel:rgba(20,25,48,.72);
+    --line:rgba(140,160,255,.16); --txt:#e8ecff; --sub:#9aa6cc;
+    --gold:#ffd166; --gold2:#ffb347; --violet:#8b7dff; --cyan:#4fd8ff;
+    --green:#5be3a7; --red:#ff6b8a;
+    --mono:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--txt);
+    font-family:"PingFang SC","Microsoft YaHei","Segoe UI",system-ui,-apple-system,sans-serif;
+    line-height:1.75; -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  }
+  /* 星空背景 */
+  .stars,.glow{position:fixed;inset:0;pointer-events:none;z-index:0}
+  .stars{
+    background-image:
+      radial-gradient(1px 1px at 12% 18%,rgba(255,255,255,.55) 99%,transparent),
+      radial-gradient(1px 1px at 78% 12%,rgba(160,190,255,.5) 99%,transparent),
+      radial-gradient(2px 2px at 43% 62%,rgba(255,220,150,.4) 99%,transparent),
+      radial-gradient(1px 1px at 88% 74%,rgba(255,255,255,.4) 99%,transparent),
+      radial-gradient(1px 1px at 25% 85%,rgba(140,200,255,.45) 99%,transparent),
+      radial-gradient(1px 1px at 62% 33%,rgba(255,255,255,.35) 99%,transparent);
+    background-size:520px 520px,700px 700px,900px 900px,640px 640px,820px 820px,760px 760px;
+    opacity:.55;
+  }
+  .glow{
+    background:
+      radial-gradient(760px 480px at 18% -8%,rgba(139,125,255,.20),transparent 70%),
+      radial-gradient(700px 460px at 88% 4%,rgba(79,216,255,.13),transparent 70%),
+      radial-gradient(900px 600px at 50% 110%,rgba(255,179,71,.09),transparent 70%);
+  }
+  .wrap{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:0 24px 80px}
+
+  /* 顶部导航 */
+  nav{
+    position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:22px 24px;
+    display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.5px}
+  .brand .mark{
+    width:30px;height:30px;border-radius:9px;display:grid;place-items:center;
+    background:linear-gradient(135deg,var(--gold),var(--gold2));color:#241a00;font-size:17px;font-weight:900;
+    box-shadow:0 0 22px rgba(255,193,80,.35);
+  }
+  .navlinks{display:flex;gap:22px;font-size:14px}
+  .navlinks a{color:var(--sub);text-decoration:none;transition:color .2s}
+  .navlinks a:hover{color:var(--gold)}
+
+  /* Hero */
+  header.hero{padding:64px 0 40px;text-align:center;position:relative}
+  .badge{
+    display:inline-flex;align-items:center;gap:8px;padding:7px 15px;border:1px solid var(--line);
+    border-radius:999px;background:rgba(139,125,255,.08);color:var(--sub);font-size:12.5px;letter-spacing:.6px;
+  }
+  .badge i{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green)}
+  h1{
+    margin:26px 0 10px;font-size:clamp(38px,7.2vw,76px);line-height:1.1;font-weight:900;letter-spacing:2px;
+    background:linear-gradient(100deg,#fff 8%,var(--gold) 44%,var(--gold2) 62%,var(--violet) 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    text-shadow:0 0 60px rgba(255,190,90,.12);
+  }
+  .en{margin:0;color:var(--violet);font-family:var(--mono);font-size:13px;letter-spacing:5px;text-transform:uppercase}
+  .slogan{margin:26px auto 0;max-width:660px;font-size:clamp(15px,2.2vw,19px);color:var(--sub)}
+  .slogan b{color:var(--gold);font-weight:600}
+
+  .actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin:36px 0 18px}
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;padding:14px 26px;border-radius:13px;
+    font-size:15px;font-weight:700;text-decoration:none;transition:transform .18s,box-shadow .18s,border-color .18s;
+    border:1px solid transparent;white-space:nowrap;
+  }
+  .btn:hover{transform:translateY(-3px)}
+  .btn-primary{
+    background:linear-gradient(135deg,var(--gold),var(--gold2));color:#241a00;
+    box-shadow:0 10px 34px rgba(255,180,70,.3);
+  }
+  .btn-primary:hover{box-shadow:0 14px 44px rgba(255,180,70,.48)}
+  .btn-ghost{background:rgba(255,255,255,.035);border-color:var(--line);color:var(--txt)}
+  .btn-ghost:hover{border-color:var(--violet);box-shadow:0 10px 30px rgba(139,125,255,.16)}
+  .btn svg{width:18px;height:18px;flex:none}
+  .filemeta{
+    display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:6px;
+    font-family:var(--mono);font-size:12px;color:#7c88ae;
+  }
+  .filemeta span{padding:4px 10px;border:1px solid var(--line);border-radius:7px;background:rgba(255,255,255,.02)}
+
+  /* 通用区块 */
+  section{margin-top:66px;scroll-margin-top:24px}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:3px;color:var(--cyan);text-transform:uppercase;margin:0 0 10px}
+  h2{font-size:clamp(23px,3.6vw,33px);margin:0 0 8px;font-weight:800;letter-spacing:.5px}
+  h2::after{content:"";display:block;width:52px;height:3px;margin-top:14px;border-radius:3px;background:linear-gradient(90deg,var(--gold),var(--violet))}
+  .lead{color:var(--sub);max-width:780px;margin:14px 0 26px;font-size:15px}
+  .panel{
+    background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:26px;
+    backdrop-filter:blur(8px);box-shadow:0 18px 50px rgba(0,0,0,.28);
+  }
+  .grid{display:grid;gap:16px}
+  .g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .card{
+    background:rgba(255,255,255,.028);border:1px solid var(--line);border-radius:14px;padding:20px;
+    transition:border-color .2s,transform .2s;
+  }
+  .card:hover{border-color:rgba(255,209,102,.42);transform:translateY(-2px)}
+  .card .k{font-family:var(--mono);font-size:11px;letter-spacing:1.6px;color:var(--violet);text-transform:uppercase}
+  .card h3{margin:9px 0 8px;font-size:17px;font-weight:700}
+  .card p{margin:0;color:var(--sub);font-size:13.5px;line-height:1.7}
+  .num{font-family:var(--mono);font-size:25px;font-weight:700;color:var(--gold)}
+
+  /* 公式块 */
+  pre{
+    margin:18px 0 0;padding:20px 22px;border-radius:12px;overflow-x:auto;
+    background:#05070f;border:1px solid rgba(79,216,255,.18);
+    font-family:var(--mono);font-size:13px;line-height:1.9;color:#cfe4ff;
+  }
+  pre .op{color:var(--gold)} pre .cm{color:#5f6b90} pre .hi{color:var(--gold);font-weight:700}
+  code.inline{font-family:var(--mono);font-size:12.5px;background:rgba(139,125,255,.13);color:#c9c2ff;padding:2px 7px;border-radius:5px}
+
+  /* 阈值条 */
+  .threshold{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
+  .chip{
+    display:flex;align-items:center;gap:9px;padding:10px 14px;border-radius:11px;
+    background:rgba(255,209,102,.07);border:1px solid rgba(255,209,102,.28);font-size:13px;
+  }
+  .chip b{color:var(--gold);font-family:var(--mono)}
+  .chip.crit{border-color:rgba(255,107,138,.35);background:rgba(255,107,138,.07)}
+  .chip.crit b{color:var(--red)}
+
+  /* 表格 */
+  table{width:100%;border-collapse:collapse;font-size:14px;margin-top:6px}
+  th,td{padding:13px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-family:var(--mono);font-size:11px;letter-spacing:1.4px;color:var(--cyan);text-transform:uppercase;font-weight:600}
+  td:first-child{color:var(--gold);font-weight:600;white-space:nowrap}
+  tbody tr:last-child td{border-bottom:0}
+  td{color:var(--sub)}
+
+  /* 流程步骤 */
+  .flow{display:flex;gap:0;flex-wrap:wrap;align-items:stretch;margin-top:20px}
+  .step{
+    flex:1 1 150px;min-width:140px;position:relative;padding:16px 14px;
+    background:rgba(255,255,255,.028);border:1px solid var(--line);border-radius:12px;margin:6px;
+  }
+  .step .n{font-family:var(--mono);font-size:11px;color:var(--violet);letter-spacing:1px}
+  .step h4{margin:8px 0 6px;font-size:14px;font-weight:700}
+  .step p{margin:0;font-size:12px;color:var(--sub);line-height:1.6}
+  .step:not(:last-child)::after{
+    content:"›";position:absolute;right:-13px;top:50%;transform:translateY(-50%);
+    color:var(--gold);font-size:22px;z-index:2;text-shadow:0 0 10px rgba(255,209,102,.5)
+  }
+
+  /* 目录树 */
+  .tree{
+    font-family:var(--mono);font-size:12.5px;line-height:1.95;color:#aeb9dc;
+    background:#05070f;border:1px solid var(--line);border-radius:12px;padding:20px 22px;overflow-x:auto;
+  }
+  .tree .d{color:var(--cyan)} .tree .f{color:var(--sub)} .tree .hot{color:var(--gold)}
+
+  .note{
+    margin-top:18px;padding:16px 18px;border-left:3px solid var(--violet);
+    background:rgba(139,125,255,.07);border-radius:0 12px 12px 0;font-size:13.5px;color:var(--sub);
+  }
+  .note b{color:var(--txt)}
+  .ok{color:var(--green)} .warn{color:var(--gold)}
+
+  /* 下载区 */
+  .download{
+    text-align:center;background:
+      linear-gradient(180deg,rgba(255,209,102,.07),rgba(139,125,255,.05)),var(--panel);
+    border:1px solid rgba(255,209,102,.24);border-radius:20px;padding:42px 26px;
+  }
+  .download h2{margin-bottom:6px}
+  .download .lead{margin:12px auto 26px;text-align:center}
+
+  footer{
+    margin-top:76px;padding-top:26px;border-top:1px solid var(--line);
+    display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;
+    font-size:12.5px;color:#6f7a9d;
+  }
+  footer a{color:var(--sub);text-decoration:none}
+  footer a:hover{color:var(--gold)}
+  .lic{font-family:var(--mono);font-size:11.5px;line-height:1.9}
+
+  @media(max-width:820px){
+    .g2,.g3,.g4{grid-template-columns:1fr}
+    header.hero{padding:40px 0 24px}
+    .step:not(:last-child)::after{display:none}
+    .navlinks{display:none}
+  }
+</style>
+</head>
+<body>
+<div class="stars"></div><div class="glow"></div>
+
+<nav>
+  <div class="brand"><span class="mark">暴</span><span>重生之满级暴击</span></div>
+  <div class="navlinks">
+    <a href="#about">项目简介</a>
+    <a href="#principle">原理说明</a>
+    <a href="#pipeline">资源管线</a>
+    <a href="#build">构建</a>
+    <a href="#download">下载</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <header class="hero">
+    <span class="badge"><i></i> LibGDX 1.12.1 · Java · Android / Windows</span>
+    <h1>重生之满级暴击</h1>
+    <p class="en">Max Crit Reborn</p>
+    <p class="slogan">重生归零，暴击满级。<b>每一次重来，都是更强的自己。</b><br>原创 2D 肉鸽割草 · 自研满级暴击乘区 · 局外永久养成</p>
+
+    <div class="actions">
+      <a class="btn btn-primary" href="https://github.com/180lisilence/critical-game/raw/refs/heads/main/android/build/outputs/apk/debug/android-debug.apk" download>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        下载 Android APK
+      </a>
+      <a class="btn btn-ghost" href="https://github.com/180lisilence/critical-game/archive/refs/heads/main.zip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8"/><rect x="3" y="3" width="18" height="5" rx="1"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+        下载完整源码
+      </a>
+      <a class="btn btn-ghost" href="https://github.com/180lisilence/critical-game">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5A11.5 11.5 0 0 0 .5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2.2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5z"/></svg>
+        GitHub 仓库
+      </a>
+    </div>
+    <div class="filemeta">
+      <span>android-debug.apk</span><span>27.5 MB</span><span>API 21+ · arm64 / armv7 / x86 / x86_64</span><span>com.yunluhezi.maxcrit</span><span>SHA-256 3fc418e2…f999</span>
+    </div>
+  </header>
+
+  <!-- 简介 -->
+  <section id="about">
+    <p class="eyebrow">01 / Overview</p>
+    <h2>这是一个什么游戏</h2>
+    <p class="lead">《重生之满级暴击》是基于 <b>LibGDX 1.12.1 (Java)</b> 从零搭建的原创 2D 肉鸽割草游戏，由「云麓盒子」开发。它脱离任何既有玩法，自建世界观、数值、美术与养成体系：摇杆走位、自动锁敌、升级三选一、波次刷怪与 BOSS Rush，全部围绕「暴击」这一条主轴设计。业务逻辑写在平台无关的 <code class="inline">core</code> 模块，Android 与 Windows 复用同一份代码。</p>
+    <div class="grid g4">
+      <div class="card"><div class="k">Engine</div><h3>LibGDX 1.12.1</h3><p>Java / Scene2D UI / Gson 配置 / Pool&lt;T&gt; 对象池，本地离线依赖全家桶。</p></div>
+      <div class="card"><div class="k">Platform</div><h3>Android + Windows</h3><p>core 共用，android 与 desktop(lwjgl3) 仅作启动器与平台桥接。</p></div>
+      <div class="card"><div class="k">Artifacts</div><h3><span class="num">121</span> 张源图</h3><p>95 张 2848×1600 UI 成品稿 + 26 张 2048×2048 图标 / 立绘 / 场景。</p></div>
+      <div class="card"><div class="k">Audio</div><h3><span class="num">29</span> 个音频</h3><p>24 个 .wav 短音效 + 5 首 .ogg BGM，CC0 可商用，按扩展名自动分流加载。</p></div>
+    </div>
+  </section>
+
+  <!-- 原理说明 -->
+  <section id="principle">
+    <p class="eyebrow">02 / How it works</p>
+    <h2>原理说明</h2>
+    <p class="lead">这一节回答三个问题：伤害凭什么这样算、重生为什么会变强、以及一局游戏是怎么跑起来的。所有数值与类名都对应仓库里的真实实现，不是概念示意。</p>
+
+    <div class="panel">
+      <div class="card" style="background:transparent;border:0;padding:0">
+        <div class="k">2.1 · DamageCalculator.java</div>
+        <h3>满级暴击乘区：伤害不是加法，是分层相乘</h3>
+        <p>核心思路是<b>把每一类加成拆成独立乘区</b>，而不是堆在一个加法池里。这样数值不会互相稀释，也让「暴击」成为可以单独调参、单独触发特效的维度。</p>
+      </div>
+      <pre><span class="cm">// battle/damage/DamageCalculator.java —— 最终伤害</span>
+最终伤害 = 基础攻击
+         <span class="op">×</span> 流派倍率 <span class="op">×</span> 神装套装系数 <span class="op">×</span> 符文增幅 <span class="op">×</span> 回溯印记加成 <span class="op">×</span> 天赋/局内被动
+         <span class="op">×</span> 暴击判定系数 <span class="op">×</span> <span class="hi">满级超额暴击系数</span>
+
+<span class="cm">// 暴击判定</span>
+isCrit = roll(0..100) &lt; (暴击率 − 目标暴击抗性)
+
+<span class="cm">// 暴击回溯：每次暴击命中都返还资源，形成正反馈</span>
+暴击命中 → 回血 = 基础攻击 × 2% ，主动技能 CD − 0.15s
+
+<span class="cm">// 满级暴击：双阈值同时满足，才额外触发范围冲击波</span>
+if (暴击率 ≥ <span class="hi">85%</span> &amp;&amp; 爆伤加成 ≥ <span class="hi">150%</span>)
+    暴击命中附带范围冲击波（<span class="hi">2.5×</span> 伤害）</pre>
+      <div class="threshold">
+        <div class="chip"><span>暴击率阈值</span><b>OVER_CRIT_CRIT_RATE = 85%</b></div>
+        <div class="chip crit"><span>爆伤阈值</span><b>OVER_CRIT_DAMAGE_BONUS = 150%</b></div>
+        <div class="chip"><span>冲击波倍率</span><b>2.5 ×</b></div>
+        <div class="chip"><span>回溯回血</span><b>2% / 次</b></div>
+      </div>
+      <div class="note"><b>为什么用「且」而不是「或」？</b> 单堆暴击率或单堆爆伤都能靠单一装备毕业；双阈值逼迫玩家在流派、神装、符文、天赋四条养成线之间做取舍，这正是肉鸽构筑的深度来源。阈值常量集中在 <code class="inline">DamageCalculator</code>，方便整体调平衡而不改公式结构。</div>
+    </div>
+
+    <div class="grid g2" style="margin-top:16px">
+      <div class="panel">
+        <div class="k" style="font-family:var(--mono);font-size:11px;letter-spacing:1.6px;color:var(--violet)">2.2 · MetaProgress.java</div>
+        <h3 style="margin:9px 0 10px;font-size:18px">回溯印记：把「失败」也变成收益</h3>
+        <p style="color:var(--sub);font-size:13.5px;margin:0 0 14px">每局结束——<b>无论通关或失败</b>——都发放回溯印记。每枚永久提供 <b style="color:var(--gold)">+1.5% 暴击率 / +4% 爆伤</b>，写入带 CRC 校验的存档 <code class="inline">save/maxcrit_save.json</code>。</p>
+        <p style="color:var(--sub);font-size:13.5px;margin:0">于是「重生」不是惩罚而是货币：局内死得越早，下一局的起手面板仍比上一局更高。这个闭环把单局随机性，兑换成了跨局的确定性成长。</p>
+      </div>
+      <div class="panel">
+        <div class="k" style="font-family:var(--mono);font-size:11px;letter-spacing:1.6px;color:var(--violet)">2.3 · 养成闭环</div>
+        <h3 style="margin:9px 0 10px;font-size:18px">四条线，共用一套面板预计算</h3>
+        <table>
+          <thead><tr><th>系统</th><th>作用</th><th>落点</th></tr></thead>
+          <tbody>
+            <tr><td>回溯印记</td><td>暴击率 / 爆伤永久加成</td><td>SaveManager.echoMarks</td></tr>
+            <tr><td>神装 6 部位</td><td>2 / 4 / 6 件激活裂隙·虚空·破晓套装</td><td>weapon…ring</td></tr>
+            <tr><td>暴击符文</td><td>每枚 +1.5% 暴击率、+5% 爆伤</td><td>SaveManager.runes</td></tr>
+            <tr><td>觉醒天赋树</td><td>瞬杀 / 永续 / 神佑 三系 9 节点</td><td>天赋点前置解锁</td></tr>
+          </tbody>
+        </table>
+        <p style="color:var(--sub);font-size:13px;margin:12px 0 0">进局前把局外属性一次性合并进战斗面板，局内不再反复回查存档，避免每帧 IO 与乘区漂移。</p>
+      </div>
+    </div>
+
+    <div class="panel" style="margin-top:16px">
+      <div class="k" style="font-family:var(--mono);font-size:11px;letter-spacing:1.6px;color:var(--violet)">2.4 · BattleWorld / WaveManager</div>
+      <h3 style="margin:9px 0 4px;font-size:18px">一局是怎么跑起来的</h3>
+      <p class="lead" style="margin:8px 0 0;font-size:13.5px">自动武器按「距离优先 + 视野检测」锁敌，玩家只需要走位；数值成长交给三选一构筑；难度膨胀交给波次计时器。</p>
+      <div class="flow">
+        <div class="step"><div class="n">STEP 01</div><h4>摇杆走位</h4><p>虚拟摇杆 / WASD，圆形碰撞体，拉扯怪群。</p></div>
+        <div class="step"><div class="n">STEP 02</div><h4>自动锁敌</h4><p>距离优先扫描，自动发射，子弹走对象池。</p></div>
+        <div class="step"><div class="n">STEP 03</div><h4>经验球</h4><p>击杀掉落，磁铁类技能扩大拾取半径。</p></div>
+        <div class="step"><div class="n">STEP 04</div><h4>三选一</h4><p>经验满暂停，按稀有度权重抽技能，可叠加进阶。</p></div>
+        <div class="step"><div class="n">STEP 05</div><h4>波次推进</h4><p>小怪 → 精英 → BOSS，计时器持续抬血量与抗性。</p></div>
+        <div class="step"><div class="n">STEP 06</div><h4>结算重生</h4><p>BOSS 掉暴击突破晶，发放回溯印记，回到局外。</p></div>
+      </div>
+      <div class="note"><b>性能约束是设计的一部分：</b>子弹、怪物、经验球、特效、召唤物全部强制 <code class="inline">Pool&lt;T&gt;</code>，禁止频繁 <code class="inline">new</code>；SpriteBatch 合批；屏幕外怪物休眠；技能与怪物数值全部 JSON 驱动，不硬编码。</div>
+    </div>
+
+    <div class="grid g2" style="margin-top:16px">
+      <div class="panel">
+        <div class="k" style="font-family:var(--mono);font-size:11px;letter-spacing:1.6px;color:var(--violet)">2.5 · 分层架构</div>
+        <h3 style="margin:9px 0 10px;font-size:18px">一份逻辑，两个启动器</h3>
+        <div class="tree"><span class="d">core/</span>  <span class="f">平台无关主逻辑（Android / Windows 共用）</span>
+├── <span class="d">core/</span>        <span class="f">MaxCritGame、PlatformBridge</span>
+├── <span class="d">config/</span>      <span class="f">ConfigHub + 4 张 JSON 表（Gson）</span>
+├── <span class="d">save/</span>        <span class="f">SaveManager(CRC)、MetaProgress</span>
+├── <span class="d">battle/</span>      <span class="hot">damage/ ★ 满级暴击乘区</span> · wave/ · skill/ · pool/
+├── <span class="d">ui/</span>          <span class="f">Hud、VirtualJoystick、SkillChoiceDialog</span>
+└── <span class="d">screen/</span>      <span class="f">Menu / Game / Talent / Bag</span>
+<span class="d">android/</span>     <span class="f">启动器，applicationId com.yunluhezi.maxcrit</span>
+<span class="d">desktop/</span>     <span class="f">lwjgl3 启动器</span>
+<span class="d">libs/</span>        <span class="f">gdx 1.12.1 离线依赖（直连 files(...)）</span></div>
+      </div>
+      <div class="panel">
+        <div class="k" style="font-family:var(--mono);font-size:11px;letter-spacing:1.6px;color:var(--violet)">2.6 · 工程纪要</div>
+        <h3 style="margin:9px 0 10px;font-size:18px">一次真实的启动闪退根因修复</h3>
+        <p style="color:var(--sub);font-size:13.5px;margin:0 0 12px">真机崩溃栈指向 <code class="inline">NoClassDefFoundError: com/badlogic/gdx/utils/SharedLibraryLoader</code>。原因不是代码写错，而是 <b>依赖解析方式</b>：</p>
+        <pre style="margin:0;font-size:12px;line-height:1.85"><span class="cm">// LibGDX 1.12.0 起把该类拆到独立 artifact</span>
+<span class="cm">// 但工程用 files(...) 直连，无传递依赖能力</span>
+api files(<span class="hi">'../libs/gdx-1.12.1.jar'</span>)
+
+GdxNativesLoader.load()
+  → new SharedLibraryLoader()  <span class="op">// MISSING</span>
+  → AndroidApplication.initialize() 中断
+  → input 为 null → onResume() NPE → 闪退</pre>
+        <p style="color:var(--sub);font-size:13.5px;margin:12px 0 0">修复不靠下载（Maven 全通道实测不可达）：在 <code class="inline">core/src/.../gdx/utils/</code> 下自建等价类，内联平台判定、去掉 <code class="inline">jnigen-commons</code> 依赖，Android 分支直接 <code class="inline">System.loadLibrary</code>。4 个 jar/aar 共 1290 个引用的完整性扫描确认：<span class="ok">只缺这 1 个类</span>。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 资源管线 -->
+  <section id="pipeline">
+    <p class="eyebrow">03 / Asset pipeline</p>
+    <h2>素材怎么变成游戏资源</h2>
+    <p class="lead">仓库根目录里那些以 <code class="inline">sucai</code> 开头的目录，是同一批原始美术在不同处理阶段的产物；真正进包的是 <code class="inline">assets/</code>。</p>
+    <div class="panel">
+      <div class="tree"><span class="d">sucai/</span>                 <span class="f">121 张源图：95 张 2848×1600 UI 成品稿 + 26 张 2048×2048 图标/立绘/场景</span>
+   │
+   ├─ <span class="d">sucai_split/</span> / <span class="d">sucai_parts/</span> / <span class="d">sucai_parts_selected/</span>  <span class="f">切图与零件筛选中间产物</span>
+   ├─ <span class="d">sucai_ui/</span>              <span class="f">UI 底板整理结果</span>
+   │
+   ▼  <span class="hot">tools/build_assets.py</span>  <span class="f">切图 / 缩放 / 生成中文位图字体</span>
+<span class="d">assets/</span>
+├── <span class="d">textures/ui/</span>     <span class="f">79 张 1280×720 JPG（图做背景，数值与按钮由 Scene2D 动态绘制）</span>
+├── <span class="d">textures/icons/</span>  <span class="f">41 个 512px PNG8 图标 / 立绘 / 特效</span>
+├── <span class="d">ui/font/</span>        <span class="f">deskhan.fnt + deskhan.png（中文 BitmapFont，覆盖项目全部用字）</span>
+├── <span class="d">config/</span>         <span class="f">skill.json / monster.json / equip.json / talent.json</span>
+└── <span class="d">sound/</span>          <span class="f">*.wav → Gdx.audio.newSound（可并发叠加）；*.ogg → newMusic（长循环）</span></div>
+      <div class="note"><b>「底板 + 动态数据层」是关键取舍：</b>UI 成品稿里已经含中文文案，但它只当背景图用；血条、数值、列表、按钮全部用 Scene2D 实时绘制，否则每次数值变化都要重新出图。音效的 <code class="inline">.wav / .ogg</code> 之分也不是习惯，而是 <code class="inline">GameAssets.loadSounds()</code> 按扩展名硬分流到 SoundPool 或 MediaPlayer 的约束。</div>
+    </div>
+  </section>
+
+  <!-- 构建 -->
+  <section id="build">
+    <p class="eyebrow">04 / Build</p>
+    <h2>从源码到可运行</h2>
+    <p class="lead">工程路径含中文，AGP 默认会拒绝；<code class="inline">gradle.properties</code> 里已设 <code class="inline">android.overridePathCheck=true</code>。工程没有 gradlew，需显式使用 Gradle 8.9 与 JDK 21。</p>
+    <div class="panel">
+      <pre style="margin:0"><span class="cm"># 环境</span>
+export JAVA_HOME="D:/TOOL/jdk"
+export ANDROID_HOME="D:/Android/Sdk"
+set ANDROID_SDK_ROOT="D:/Android/Sdk"
+
+<span class="cm"># Android debug APK → android/build/outputs/apk/debug/android-debug.apk</span>
+E:/tool/gradle-8.9/bin/gradle.bat :android:assembleDebug --no-daemon
+
+<span class="cm"># Windows 桌面版</span>
+E:/tool/gradle-8.9/bin/gradle.bat :desktop:run --no-daemon
+
+<span class="cm"># 改了 sucai/ 之后重建资源</span>
+"C:/Users/19513/.workbuddy/binaries/python/versions/3.13.12/python.exe" tools/build_assets.py</pre>
+      <div class="note"><b>已知限制（如实标注）：</b> 无尽爬塔与 4 人联机尚未实现（<code class="inline">network</code> 包预留空目录）；符文镶嵌逻辑未接线；<span class="warn">音效文件已落地，但代码内尚无调用点</span>；屏幕外怪物剔除未启用；UI 底板未做九宫格切分，高分屏边缘可能略糊。当前 APK 为含闪退修复的 debug 构建。详见仓库内 <code class="inline">README.md</code> / <code class="inline">交接文档.md</code> / <code class="inline">自检报告.md</code>。</div>
+    </div>
+  </section>
+
+  <!-- 下载 -->
+  <section id="download" class="download">
+    <p class="eyebrow">05 / Download</p>
+    <h2>立即体验</h2>
+    <p class="lead">APK 为 Android debug 构建，需开启「允许安装未知来源」。源码包含完整工程、素材、配置表与全部开发文档。</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="https://github.com/180lisilence/critical-game/raw/refs/heads/main/android/build/outputs/apk/debug/android-debug.apk" download>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        下载 android-debug.apk · 27.5 MB
+      </a>
+      <a class="btn btn-ghost" href="https://github.com/180lisilence/critical-game/archive/refs/heads/main.zip">下载源码 ZIP</a>
+    </div>
+    <p style="margin:16px 0 0;font-family:var(--mono);font-size:11.5px;color:#6f7a9d">SHA-256 · 3fc418e22bd189f78fb63d38ca9a4b8311a9982ccf122b992586fbdd632cf999</p>
+  </section>
+
+  <footer>
+    <div>
+      <div style="font-weight:700;color:var(--txt);margin-bottom:6px">重生之满级暴击 · Max Crit Reborn</div>
+      <div>开发者：云麓盒子 ｜ Slogan：重生归零，暴击满级，每一次重来都是更强的自己</div>
+      <div style="margin-top:8px"><a href="https://github.com/180lisilence/critical-game">github.com/180lisilence/critical-game</a></div>
+    </div>
+    <div class="lic">
+      开源依赖：LibGDX 1.12.1 · Apache-2.0 ｜ Gson · Apache-2.0 ｜ KryoNet · BSD<br>
+      音效 / BGM：Kenney Sci-Fi Sounds、Kenney RPG Audio、OpenGameArt Dark Sci-Fi Audio Pack · <span class="ok">CC0</span><br>
+      美术、文案、数值与机制均为本项目原创。
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
